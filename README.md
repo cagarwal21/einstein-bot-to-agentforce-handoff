@@ -1,139 +1,144 @@
 # The Seamless Handoff: Integrating Einstein Enhanced Bot with Agentforce Agent
 
-This repository documents the strategic fusion of **Einstein Bot's** rule-based triage with **Agentforce AI's** adaptive intelligence. The "Hybrid Bot" solution ensures high-volume inquiries are handled efficiently while complex issues are resolved by an autonomous agent with deep context.
+The Hybrid Bot solution is the strategic fusion of Einstein Bot's rule-based triage with Agentforce AI's adaptive intelligence for better user experience. Einstein Bot Classic handles high-volume, repetitive inquiries with speed and consistency using its defined flows. Agentforce agents step in for complexity, leveraging Large Language Models (LLMs) to understand deep context, execute multi-step actions autonomously, and provide personalized, human-like resolution.
 
-## Overview
+This blog will explore how this dual-strategy approach allows companies to redefine service: achieving the efficiency of automation while guaranteeing sophisticated, contextual resolution for every customer interaction. Learn how a Hybrid Bot maximizes efficiency and elevates customer satisfaction by deploying the right type of intelligence at the perfect moment.
 
-**The Problem:** Achieving unified, intelligent customer service that balances efficiency with personalized resolution.
+## Use Case
 
-**The Solution:**
-1.  **Einstein Bot Classic:** Streamlines high-frequency inquiries (e.g., Log Case, Status Check).
-2.  **Agentforce Agent:** Handles specialized knowledge-based questions and complex multi-step actions using LLMs.
+QuantumConnect aims to achieve unified, intelligent customer service by ensuring the following:
 
-### Architecture
-The architecture routes user input through an Inbound Omni-Channel Flow to the Einstein Bot. Simple requests are handled via Flow/Apex, while complex queries are transferred via an Outbound Omni-Channel Flow to the Agentforce Agent.
+* **Efficient transaction handling:** Quickly streamline high-frequency customer inquiries (Log Case and Status Check) using the initial bot (Einstein Bot Classic).
+* **Specialized knowledge handoff:** Ensure all knowledge-based questions, regardless of complexity, are immediately handled by a dedicated, advanced agent (Agentforce Agent).
 
-![Hybrid Bot Architecture](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/Image1.png)
-*Figure 1: Hybrid Bot Architecture showing the flow between Einstein Bot and Agentforce Agent.*
+![Hybrid Bot Architecture: Einstein Classic triages transactions (Log/Status) and routes complex knowledge to Agentforce Agent.](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/image1.png?raw=true)
 
----
+## Configure Agentforce Service Agent
 
-## Configuration Guide
+Create an Agentforce Data Library, set the Data Type to 'file', and upload the support policy and FAQ PDF documents to it.
 
-### Step 1: Configure Agentforce Service Agent
+![Image shows how to set up the Agentforce Data library.](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/image2.png?raw=true)
 
-1.  **Create Data Library:** Create an Agentforce Data Library, set the Data Type to 'file', and upload support policy/FAQ PDF documents.
+Create a new Agentforce Service Agent named 'Unified Resolution Agent'. Once created, configure it by adding the Data Library, Topic, and Instruction. Finally, assign the 'Answer Questions with Knowledge' agent action to it.
 
-![Agentforce Data Library Setup](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/Image2.png)
-*Figure 2: Configuring the Agentforce Data Library.*
+![Agentforce Builder testing shows the AI accurately retrieves and grounds the warranty policy based on the user prompt from the knowledge base.](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/image3.png?raw=true)
 
-2.  **Create Agent:** Create a "Unified Resolution Agent".
-3.  **Configure Agent:** Add the Data Library, define Topics/Instructions, and assign the 'Answer Questions with Knowledge' action.
+## Configure Einstein Enhance Bot
 
-![Agentforce Builder Testing](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/Image3.png)
-*Figure 3: Testing the Agentforce Agent's ability to retrieve warranty policy from the library.*
+### Step 1: Create a new Einstein Enhanced Bot
 
-### Step 2: Configure Einstein Enhanced Bot ("Astro Case Resolution")
+* Navigate to Setup => Einstein Bot, Select a type of bot = Enhanced Bot, click next.
+* Select Start from Scratch.
+* Give the bot name as “ Astro Case Resolution” and Primary Language as “English”, click Next.
+* Keep the welcome message as default and add the Menu Item 1 = Case Status , Menu Item 2 = Log a Case , Menu Item 3 = Talk to an expert.
+* Keep Outbound Omni-channel flow as blank. Will configure this in later steps. Click next and then click proceed.
 
-Create a new Enhanced Bot named **Astro Case Resolution**.
+### Step 2: Configure the “Case Status” Dialog
 
-**1. Case Status Dialog:**
-* Add a question to get the user's email.
-* Add an Action to run the "Get Case Details" flow.
-* Add a Message component to display the status.
+* Add the first component Question and ask the user to provide the email address.
+* For Case Status dialogue add component flow and select an existing flow “Get Case Details”.
+* Flow will query the case object and return the status of the case.
+* Add the message component to show the status of the case.
 
-![Case Status Dialog](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/Image4.png)
-*Figure 4: Case Status Dialog Configuration.*
+![image shows the case status dialog configuration.](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/image4.png?raw=true)
 
-**2. Log a Case Dialog:**
-* Collect Email and Problem Statement via Question components.
-* Call the "Create a case flow".
-* Display the generated Case Number.
+### Step 3: Configure the “Log a Case” Dialog
 
-![Log a Case Dialog](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/Image5.png)
-*Figure 5: Log a Case Dialog Configuration.*
+* Add the first component Question and ask the user to provide the email address.
+* Add the second component Question and ask the user to provide the Problem statement.
+* Add the component to call the flow “Create a case flow”.
+* Add a message component to provide the case number to the user.
 
-**3. Talk to an Expert Dialog:**
-* Set the Next Step to "Transfer to Agent".
+![image shows the Log a case dialog configuration.](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/image5.png?raw=true)
 
-![Talk to an Expert Dialog](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/Image6.png)
-*Figure 6: Talk to an Expert Dialog Configuration.*
+### Step 4: Configure the “Talk to an expert” Dialog
 
-### Step 3: Configure Omni-Channel Routing
+Set the next step as “Transfer to Agent”.
 
-To enable the handoff, you must configure the Omni-Channel flow.
+![image shows the “Talk to an expert” dialog configuration.](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/image6.png?raw=true)
 
-1.  **Create Queue:** Create a queue (e.g., "GPO Fallback") and add the Agentforce Service Agent user to it.
-2.  **Create Omni-Channel Flow:** Create a "Route Work" step that routes to the **Agentforce Service Agent**.
+### Step 5: Configure the Omni-Channel flow for seamless chat transfer from the Einstein Bot to the Agentforce Service Agent.
 
-![Omni-Channel Flow](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/Image7.png)
-*Figure 7: Omni-Channel flow transferring chat to Unified Resolution Agent.*
+* Create a queue , Setup -> Queue , give any name to the queue.
+* In this case I am using the name as “GPO Fallback”.
+* Add the Einstein Service Agent created as part of Agentforce Service Agent user in this queue.
+* Create a flow of type Omni Channel flow.
+* Add the step “Route Work” . Select the service channel as “LiveMessage”, route to as “Agentforce Service Agent” and select the “Unified Resolution Agent” and select the Fallback Queue as “GPO Fallback”.
+* Save and activate the flow.
 
-3.  **Bot Overview Settings:** In the Einstein Bot Overview, set the **Outbound Omni-Channel Flow** to the flow created above.
+![Image shows the omni channel flow configuration to transfer the chat to “Unified Resolution Agent”.](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/image7.png?raw=true)
 
-![Bot Overview Settings](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/Image8.png)
-*Figure 8: Setting the Outbound Omni-Channel flow.*
+### Step 6: Configure the Einstein bot “Transfer To Agent” dialog.
 
-4.  **Transfer Dialog Rules:** In the "Transfer To Agent" dialog, add a Rule Action to set the Route Destination to the "Route to Unified Resolution Agent" flow.
+Go to overview and set the Outbound Omni-Channel flow as “Route to Unified Resolution Agent”.
 
-![Transfer To Agent Dialog](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/Image9.png)
-*Figure 9: Configuring the Transfer To Agent dialog rules.*
+![Image shows how to set the Outbound Omni-Channel flow for Einstein Enhanced Bot.](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/image8.png?raw=true)
 
-### Step 4: Deploy to Experience Cloud
+* Add the component Rules and select the Routing Type as “Omni-Channel” flow and set the Route Destination as “Route to Unified Resolution Agent”.
+* Add another rule action “Transfer” and set the destination variable as “OmnichannelFlowId” created in the previous step.
 
-**1. Inbound Omni-Channel Flow:**
-Ensure the system-generated Inbound Omni-Channel flow falls back to the "GPO Fallback" queue.
+![Image shows the “Transfer To Agent” dialog configuration.](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/image9.png?raw=true)
 
-![Inbound Omni-Channel Flow](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/Image10.png)
-*Figure 10: Inbound Omni-Channel flow configuration.*
+## Deploy the bot to the Experience Cloud site
 
-Review the bot's overview to confirm the connection.
+### Step 1: Inbound Omni Channel Flow Configuration
 
-![Bot Overview Inbound Flow](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/Image11.png)
-*Figure 11: Inbound Omni-Channel Flow verification.*
+When we create the enhanced bot, system will automatically create the Inbound Omni channel flow. Set the fall back queue that we created earlier “GPO Fallback and save activate the flow.
 
-**2. Create Messaging Channel:**
-In Setup, create a new **Enhanced Chat** channel (Messaging for In-App and Web). Set the routing type to "Omni-flow" pointing to the *Inbound* flow.
+![Image shows the omni channel flow configuration to transfer the chat to “Astro Case Resolution” Einstein enhanced bot.](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/image10.png?raw=true)
 
-![Messaging Settings](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/Image12.png)
-*Figure 12: Messaging for In-App and Web configuration.*
+Review the Einstein enhanced bot's Overview -> Inbound Omni-Channel Flows section to ensure correct configuration.
 
-**3. Embedded Service Deployment:**
-This is automatically created when defining the Messaging Channel.
+![Image shows how to set the Inbound Omni-Channel flow for Einstein Enhanced Bot.](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/image11.png?raw=true)
 
-![Embedded Service Deployment](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/Image13.png)
-*Figure 13: Embedded Service Deployment Settings.*
+### Step 2: Create the Channel (Messaging for In-App and Web)
 
-**4. Experience Cloud Setup:**
-Drag the **Embedded Messaging** component onto your Experience Cloud site and link it to the web deployment.
+* In Salesforce Setup, search for and select Messaging Settings. Click New Channel.
+* Click Start Select “Enhanced Chat”. Give the channel name “Astro case resolution web channel”.
+* Select Deployment Type as “Web”.
+* Give the domain url of your Experience cloud site without “https://”.
+* Click next and select the routing type as “Omni-flow”. Flow definition as “Route to Astro Case Resolution” and Fallback Queue as “GPO Fallback”.
+* Click save.
 
-![Experience Cloud Component](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/Image14.png)
-*Figure 14: Embedded Messaging component on the site.*
+![Image shows the configuration for Messaging for In-App and Web channel](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/image12.png?raw=true)
 
----
+### Step 3: Create the Embedded Service Deployment
 
-## Testing the Hybrid Bot
+Creating the Messaging Channel automatically sets up the embedding service deployment.
 
-**Scenario A: Standard Transaction (Einstein Bot)**
-The user initiates a chat and selects **Case Status**. The Einstein Bot collects the email and returns the status via the flow.
+![Image shows the embedding service deployment configuration screen.](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/image13.png?raw=true)
 
-![Test: Menu Selection](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/Image15.png)
-*Figure 15: User selecting Case Status from the menu.*
+### Step 4: Experience Cloud Site configuration.
 
-![Test: Case Status Result](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/Image16.png)
-*Figure 16: Bot providing case number and status.*
+In the Experience Builder, open the components panel and Search for and drag the Embedded Messaging component onto your page. Set the Embedded Web Deployment as “Astro_case_resolution_web_channel”
 
-**Scenario B: Complex Inquiry Handoff (Agentforce)**
-The user selects **Talk to an expert**. The chat is transferred to the Unified Resolution Agent, which answers a warranty question using the knowledge base.
+![Image shows the Embedded Messaging component set up on Experience cloud site.](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/image14.png?raw=true)
 
-![Test: Agentforce Handoff](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/Image17.png)
-*Figure 17: Conversation transferred from Astro Bot to Unified Resolution Agent.*
+## Test the hybrid bot
 
----
+**Case status :** User initiates chat on Experience Site; Astro Bot offers options, user selects case status, and the bot provides the details.
+
+![The image depicts a user checking case status with the Astro Case Resolution Bot.](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/image15.png?raw=true)
+
+![The image shows the bot receiving the user's email and responding with the case number and status.](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/image16.png?raw=true)
+
+**Talk to an expert :** User selects "Talk to an expert," and the Astro Bot transfers the chat to the Agentforce Service Agent (Unified Resolution Agent).
+
+![The image illustrates the chat handoff initiated by the user selecting "Talk to an expert," transferring the conversation from Astro Bot to the Unified Resolution Agent.](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/image17.png?raw=true)
 
 ## Conclusion
-This architecture allows companies to redefine service by achieving the efficiency of automation for routine tasks while guaranteeing sophisticated resolution for complex interactions.
 
-### Authors
-* **Chandan Agarwal**: Lead Member of Technical Staff at Salesforce.
-* **Ishita Saxena**: Senior Solution Consultant at Salesforce.
+This hybrid bot solution uses a choice-driven approach to guide the customer journey. Its architecture, which combines Einstein Bot Classic and Agentforce agent, effectively segments service based on the user's need and intent. Customers first encounter the Einstein Bot Classic for straightforward needs (e.g., checking invoices, tracking packages, logging/checking case status). Users select these direct, rule-based flows for immediate, reliable resolution, ensuring speed and predictability at scale. For complex queries, customers are offered the option to " Talk to an Expert ." This immediately deploys the LLM-driven Agentforce agent. By leveraging deep context and autonomous action, this agent provides personalized, human-like resolution for high-value interactions, bypassing the live agent queue.
+
+## Resources
+
+* Documentation: Set Up Enhanced Bots
+* Documentation: Advanced Routing with Omni-Channel Flows
+* Documentation: Transfer Conversations from an Enhanced Bot to an Agentforce Service Agent
+* Documentation: Embedded Messaging
+* Documentation: Build the Future with Agentforce
+
+## About the authors
+
+* **Chandan Agarwal** is a Lead Member of Technical Staff at Salesforce. You can find him on LinkedIn.
+* **Ishita Saxena** is a Senior Solution Consultant at Salesforce. You can find her on LinkedIn.

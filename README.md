@@ -11,7 +11,7 @@ QuantumConnect aims to achieve unified, intelligent customer service by ensuring
 * **Efficient transaction handling:** Quickly streamline high-frequency customer inquiries (Log Case and Status Check) using the initial bot (Einstein Bot Classic).
 * **Specialized knowledge handoff:** Ensure all knowledge-based questions, regardless of complexity, are immediately handled by a dedicated, advanced agent (Agentforce Agent).
 
-![Hybrid Bot Architecture: Einstein Classic triages transactions (Log/Status) and routes complex knowledge to Agentforce Agent.](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/image1.png)
+![Hybrid Bot Architecture: Einstein Classic triages transactions (Log/Status) and routes complex knowledge to Agentforce Agent.](https://github.com/cagarwal21/einstein-bot-to-agentforce-handoff/blob/main/Images/Image1.png)
 
 ## Configure Agentforce Service Agent
 

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPlannerBundle xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <description>Deliver personalized customer interactions with an autonomous AI agent. Agentforce Service Agent intelligently supports your customers with common inquiries and escalates complex issues.</description>
+    <localActionLinks>
+        <genAiFunctionName>AnswerQuestionsWithKnowledge_16jWs000000XeRh</genAiFunctionName>
+    </localActionLinks>
+    <localTopicLinks>
+        <genAiPluginName>QuantumConnect_Policy_Resolution_16jWs000000XeRh</genAiPluginName>
+    </localTopicLinks>
+    <localTopics>
+        <fullName>QuantumConnect_Policy_Resolution_16jWs000000XeRh</fullName>
+        <canEscalate>true</canEscalate>
+        <description>This topic handles escalated inquiries requiring complex policy synthesis, warranty verification, and policy-grounded troubleshooting. Requests classified here involve combining customer purchase details (e.g., date, coupon use, product type) with multiple articles from the Knowledge Base to provide a final, accurate resolution, which the initial Einstein Bot cannot achieve.</description>
+        <developerName>QuantumConnect_Policy_Resolution_16jWs000000XeRh</developerName>
+        <genAiPluginInstructions>
+            <description>STRICTLY adhere to the QuantumConnect policy documentation retrieved by the &quot;Answer Questions with Knowledge&quot; action. When answering, always attribute the policy source (e.g., &quot;As per Policy Section 3.4...&quot;) and maintain a professional, policy-compliant tone.</description>
+            <developerName>instructions_0_1763395278225</developerName>
+            <language>en_US</language>
+            <masterLabel>instructions_0_1763395278225</masterLabel>
+            <sortOrder>0</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Warranty Procedure: Use the &quot;Answer Questions with Knowledge&quot; action to confirm the warranty duration (3 years for new, 1 year for refurbished). CRITICALLY, if the customer has a refurbished product, ensure you explicitly state the physical damage exclusion (Policy 3.2).</description>
+            <developerName>instructions_1_1763395278232</developerName>
+            <language>en_US</language>
+            <masterLabel>instructions_1_1763395278232</masterLabel>
+            <sortOrder>1</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Price Adjustment Procedure: This is a synthesis task. First, check customer context for the 14-day window and coupon usage. THEN, use the &quot;Answer Questions with Knowledge&quot; action to confirm policy 3.4. The request MUST be denied if a coupon was used, regardless of the 14-day window.</description>
+            <developerName>instruction_1</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction 1</masterLabel>
+            <sortOrder>2</sortOrder>
+        </genAiPluginInstructions>
+        <genAiPluginInstructions>
+            <description>Troubleshooting Flow: Use the &quot;Answer Questions with Knowledge&quot; action to retrieve the exact three steps from Section 4 of the Knowledge Base. Always provide these steps before offering to create an escalation/RMA.</description>
+            <developerName>instruction_2</developerName>
+            <language xsi:nil="true"/>
+            <masterLabel>Instruction 2</masterLabel>
+            <sortOrder>3</sortOrder>
+        </genAiPluginInstructions>
+        <language>en_US</language>
+        <localActionLinks>
+            <functionName>AnswerQuestionsWithKnowledge_179Ws000000Kxwn</functionName>
+        </localActionLinks>
+        <localActions>
+            <fullName>AnswerQuestionsWithKnowledge_179Ws000000Kxwn</fullName>
+            <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: “What is your return policy?” “How do I fix an issue?” or “What features does a product have?”</description>
+            <developerName>AnswerQuestionsWithKnowledge_179Ws000000Kxwn</developerName>
+            <invocationTarget>streamKnowledgeSearch</invocationTarget>
+            <invocationTargetType>standardInvocableAction</invocationTargetType>
+            <isConfirmationRequired>false</isConfirmationRequired>
+            <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+            <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+            <masterLabel>Answer Questions with Knowledge</masterLabel>
+            <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+            <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+        </localActions>
+        <localDeveloperName>QuantumConnect_Policy_Resolution</localDeveloperName>
+        <masterLabel>QuantumConnect Policy Resolution</masterLabel>
+        <pluginType>Topic</pluginType>
+        <scope>Your specific and sole task is to act as the final policy resolution expert. You must use the provided customer context (purchase date, product type, order details) and the output of the &quot;Answer Questions with Knowledge&quot; action to synthesize a complete and accurate resolution. You are responsible for policy interpretation, warranty verification, and conflict resolution.</scope>
+    </localTopics>
+    <masterLabel>Unified Resolution Agent</masterLabel>
+    <plannerActions>
+        <fullName>AnswerQuestionsWithKnowledge_16jWs000000XeRh</fullName>
+        <description>Answers questions about company policies and procedures, troubleshooting steps, or product information. For example: “What is your return policy?” “How do I fix an issue?” or “What features does a product have?”</description>
+        <developerName>AnswerQuestionsWithKnowledge_16jWs000000XeRh</developerName>
+        <invocationTarget>streamKnowledgeSearch</invocationTarget>
+        <invocationTargetType>standardInvocableAction</invocationTargetType>
+        <isConfirmationRequired>false</isConfirmationRequired>
+        <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+        <localDeveloperName>AnswerQuestionsWithKnowledge</localDeveloperName>
+        <masterLabel>Answer Questions with Knowledge</masterLabel>
+        <progressIndicatorMessage>Getting answers</progressIndicatorMessage>
+        <source>EmployeeCopilot__AnswerQuestionsWithKnowledge</source>
+    </plannerActions>
+    <plannerSurfaces>
+        <adaptiveResponseAllowed>true</adaptiveResponseAllowed>
+        <callRecordingAllowed>false</callRecordingAllowed>
+        <surface>SurfaceAction__Messaging</surface>
+        <surfaceType>Messaging</surfaceType>
+    </plannerSurfaces>
+    <plannerSurfaces>
+        <adaptiveResponseAllowed>true</adaptiveResponseAllowed>
+        <callRecordingAllowed>false</callRecordingAllowed>
+        <surface>SurfaceAction__CustomerWebClient</surface>
+        <surfaceType>CustomerWebClient</surfaceType>
+    </plannerSurfaces>
+    <plannerType>AiCopilot__ReAct</plannerType>
+    <ruleExpressions>
+        <conditions>
+            <leftOperand>isVerified</leftOperand>
+            <leftOperandType>Variable</leftOperandType>
+            <operator>equal</operator>
+            <rightOperandValue>true</rightOperandValue>
+        </conditions>
+        <expression>Verified_User</expression>
+        <expressionLabel>Verified User</expressionLabel>
+        <expressionName>Verified_User</expressionName>
+        <expressionType>sel</expressionType>
+    </ruleExpressions>
+</GenAiPlannerBundle>

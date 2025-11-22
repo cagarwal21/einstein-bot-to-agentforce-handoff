@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bot xmlns="http://soap.sforce.com/2006/04/metadata">
+    <agentDSLEnabled>false</agentDSLEnabled>
+    <botMlDomain>
+        <label>Astro Case Resolution</label>
+        <name>Astro_Case_Resolution</name>
+    </botMlDomain>
+    <botSource>None</botSource>
+    <botUser>storm.a66dbae36e3097@salesforce.com</botUser>
+    <contextVariables>
+        <contextVariableMappings>
+            <SObjectType>MessagingEndUser</SObjectType>
+            <fieldName>MessagingEndUser.ContactId</fieldName>
+            <messageType>EmbeddedMessaging</messageType>
+        </contextVariableMappings>
+        <dataType>Id</dataType>
+        <description>This variable may also be referred to as MessagingEndUser ContactId</description>
+        <developerName>ContactId</developerName>
+        <includeInPrompt>false</includeInPrompt>
+        <label>Contact Id</label>
+    </contextVariables>
+    <contextVariables>
+        <contextVariableMappings>
+            <SObjectType>MessagingSession</SObjectType>
+            <fieldName>MessagingSession.MessagingEndUserId</fieldName>
+            <messageType>EmbeddedMessaging</messageType>
+        </contextVariableMappings>
+        <dataType>Id</dataType>
+        <description>This variable may also be referred to as MessagingEndUser Id</description>
+        <developerName>EndUserId</developerName>
+        <includeInPrompt>true</includeInPrompt>
+        <label>End User Id</label>
+    </contextVariables>
+    <contextVariables>
+        <contextVariableMappings>
+            <SObjectType>MessagingSession</SObjectType>
+            <fieldName>MessagingSession.Id</fieldName>
+            <messageType>EmbeddedMessaging</messageType>
+        </contextVariableMappings>
+        <dataType>Id</dataType>
+        <description>This variable may also be referred to as MessagingSession Id</description>
+        <developerName>RoutableId</developerName>
+        <includeInPrompt>true</includeInPrompt>
+        <label>Routable Id</label>
+    </contextVariables>
+    <contextVariables>
+        <contextVariableMappings>
+            <SObjectType>VoiceCall</SObjectType>
+            <fieldName>VoiceCall.Id</fieldName>
+            <messageType>EmbeddedMessaging</messageType>
+        </contextVariableMappings>
+        <dataType>Id</dataType>
+        <description>This variable may also be referred to as VoiceCall Id</description>
+        <developerName>VoiceCallId</developerName>
+        <includeInPrompt>true</includeInPrompt>
+        <label>Voice Call Id</label>
+    </contextVariables>
+    <defaultOutboundFlow>Route_to_Unified_Resolution_Agent</defaultOutboundFlow>
+    <description>A bot from scratch.</description>
+    <label>Astro Case Resolution</label>
+    <logPrivateConversationData>false</logPrivateConversationData>
+    <richContentEnabled>true</richContentEnabled>
+    <sessionTimeout>0</sessionTimeout>
+    <type>Bot</type>
+</Bot>

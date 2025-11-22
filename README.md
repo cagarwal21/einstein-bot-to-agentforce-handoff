@@ -132,13 +132,9 @@ This hybrid bot solution uses a choice-driven approach to guide the customer jou
 
 ## Resources
 
-* Documentation: Set Up Enhanced Bots
-* Documentation: Advanced Routing with Omni-Channel Flows
-* Documentation: Transfer Conversations from an Enhanced Bot to an Agentforce Service Agent
-* Documentation: Embedded Messaging
-* Documentation: Build the Future with Agentforce
+* Documentation: [Set Up Enhanced Bots](https://help.salesforce.com/s/articleView?id=service.bots_service_enhanced.htm&type=5)
+* Documentation: [Advanced Routing with Omni-Channel Flows](https://help.salesforce.com/s/articleView?id=service.omnichannel_flows.htm&type=5)
+* Documentation: [Transfer Conversations from an Enhanced Bot to an Agentforce Service Agent](https://help.salesforce.com/s/articleView?id=service.bots_service_asa_transfer_conversation.htm&type=5)
+* Documentation: [Embedded Messaging](https://help.salesforce.com/s/articleView?language=en_US&id=experience.rss_embedded_messaging.htm&type=5)
+* Documentation: [Build the Future with Agentforce](https://developer.salesforce.com/agentforce-workshop)
 
-## About the authors
-
-* **Chandan Agarwal** is a Lead Member of Technical Staff at Salesforce. You can find him on LinkedIn.
-* **Ishita Saxena** is a Senior Solution Consultant at Salesforce. You can find her on LinkedIn.
